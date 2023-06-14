@@ -2,6 +2,7 @@
 
 #include "GridlyLocalizationServiceProvider.h"
 
+#include "EditorStyleSet.h"
 #include "GridlyEditor.h"
 #include "GridlyExporter.h"
 #include "GridlyGameSettings.h"
