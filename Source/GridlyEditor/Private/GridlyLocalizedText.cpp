@@ -109,14 +109,14 @@ bool FGridlyLocalizedText::GetAllTextAsPolyglotTextDatas(ULocalizationTarget* Lo
 			LocTextHelper->EnumerateTranslations(CultureName,
 				[&CultureName, &OutPolyglotTextDatas](TSharedRef<FArchiveEntry> InManifestEntry)
 				{
-					FPolyglotTextData* PolyglotTextData = OutPolyglotTextDatas.FindByPredicate(
-						[&InManifestEntry](const FPolyglotTextData& PolyglotTextData)
-						{
-							return PolyglotTextData.GetKey() == InManifestEntry->Key.GetString();
-						});
-					if (PolyglotTextData)
+					for (FPolyglotTextData& PolyglotTextData : OutPolyglotTextDatas)
 					{
-						PolyglotTextData->AddLocalizedString(CultureName, InManifestEntry->Translation.Text);
+						if (PolyglotTextData.GetKey() == InManifestEntry->Key.GetString() &&
+							PolyglotTextData.GetNamespace() == InManifestEntry->Namespace.GetString())
+						{
+							PolyglotTextData.AddLocalizedString(CultureName, InManifestEntry->Translation.Text);
+							break;
+						}
 					}
 					return true;
 				}, true);
