@@ -135,7 +135,8 @@ bool FGridlyExporter::ConvertToJson(const TArray<FPolyglotTextData>& PolyglotTex
 
 					if (CultureName != NativeCulture
 					    && PolyglotTextDatas[i].GetLocalizedString(CultureName, LocalizedString)
-					    && FGridlyCultureConverter::ConvertToGridly(CultureName, GridlyCulture))
+					    && FGridlyCultureConverter::ConvertToGridly(CultureName, GridlyCulture)
+					    && !LocalizedString.IsEmpty())
 					{
 						TSharedPtr<FJsonObject> CellJsonObject = MakeShareable(new FJsonObject);
 						CellJsonObject->SetStringField("columnId", GameSettings->TargetLanguageColumnIdPrefix + GridlyCulture);
