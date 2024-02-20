@@ -125,7 +125,8 @@ bool FGridlyLocalizedTextConverter::WritePoFile(const TArray<FPolyglotTextData>&
 			Lines.Add(FString::Printf(TEXT("msgctxt \"%s,%s\""), *PolyglotTextDatas[i].GetNamespace(),
 				*PolyglotTextDatas[i].GetKey()));
 
-			FString NativeString = PolyglotTextDatas[i].GetNativeString().ReplaceCharWithEscapedChar();
+			TArray<TCHAR> CharsToReplace = { TEXT('\n'), TEXT('\r'), TEXT('\t'), TEXT('"'), TEXT('\\') };			
+			FString NativeString = PolyglotTextDatas[i].GetNativeString().ReplaceCharWithEscapedChar(&CharsToReplace);
 			Lines.Add(FString::Printf(TEXT("msgid \"%s\""), *NativeString));
 
 			TargetString = ConditionArchiveStrForPO(TargetString);
